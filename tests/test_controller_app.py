@@ -1,9 +1,13 @@
 from fastapi.testclient import TestClient
-from simulator.controller_app import app as controller_app, controller
-from event_store import read_events
 
 
 def test_issue_writes_directive(tmp_path, monkeypatch):
+    import os
+    # isolate per-test sqlite DB
+    os.environ['EVENT_DB'] = str(tmp_path / 'events.db')
+    from simulator.controller_app import app as controller_app, controller
+    from event_store import read_events
+
     store = 'simulator/event_store.ndjson'
     open(store, 'w').close()
     with TestClient(controller_app) as c:

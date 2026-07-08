@@ -4,6 +4,10 @@ import time
 import json
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from cryptography.hazmat.primitives import serialization
+import os
+
+# Force use of SQLite-backed event store by default for durability.
+os.environ.setdefault('EVENT_DB', 'simulator/events.db')
 from event_store import append_event
 import uvicorn
 import logging

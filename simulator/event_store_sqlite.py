@@ -10,19 +10,19 @@ from typing import List, Dict
 
 
 def _ensure_db(path: str):
-    init = not os.path.exists(path)
+    # Always connect and ensure the events table exists. Use IF NOT EXISTS
+    # to avoid races when multiple threads/processes initialize concurrently.
     conn = sqlite3.connect(path, isolation_level=None, check_same_thread=False)
     # enable WAL for better concurrency
     conn.execute('PRAGMA journal_mode=WAL;')
     conn.execute('PRAGMA synchronous=NORMAL;')
-    if init:
-        conn.execute('''CREATE TABLE events (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            chain_hash TEXT UNIQUE,
-            prev_hash TEXT,
-            event_json TEXT,
-            ts REAL
-        )''')
+    conn.execute('''CREATE TABLE IF NOT EXISTS events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        chain_hash TEXT UNIQUE,
+        prev_hash TEXT,
+        event_json TEXT,
+        ts REAL
+    )''')
     return conn
 
 

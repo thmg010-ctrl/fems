@@ -4,6 +4,9 @@ from event_store import append_event, read_events
 
 
 def test_append_and_read(tmp_path):
+    import os
+    # Use a test-local sqlite DB so behavior is deterministic
+    os.environ['EVENT_DB'] = str(tmp_path / 'events.db')
     p = tmp_path / "store.ndjson"
     ev1 = {"type": "directive", "directive": {"agent_id": 1}}
     ev2 = {"type": "execution", "result": {"agent": 1, "status": "executed"}}
