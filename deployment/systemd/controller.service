@@ -10,6 +10,9 @@ ExecStart=/usr/bin/python3 simulator/controller_app.py
 Restart=on-failure
 User=%i
 Environment=PYTHONUNBUFFERED=1
+# Ensure controller uses the SQLite event DB; replace the path with the
+# actual installation path before enabling the service.
+Environment=EVENT_DB=/path/to/fems/simulator/events.db
 
 [Install]
 WantedBy=multi-user.target
