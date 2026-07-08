@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  controller:
+    build:
+      context: .
+      dockerfile: simulator/Dockerfile.controller
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+
+  worker:
+    build:
+      context: .
+      dockerfile: simulator/Dockerfile.worker
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./:/app

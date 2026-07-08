@@ -1,0 +1,17 @@
+[Unit]
+Description=FEMS Controller Service (development)
+After=network.target
+
+[Service]
+Type=simple
+# Adjust WorkingDirectory to the repository path where `simulator/controller_app.py` lives.
+WorkingDirectory=/path/to/fems
+ExecStart=/usr/bin/python3 simulator/controller_app.py
+Restart=on-failure
+User=%i
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+
+# Note: This is a template file. Replace `WorkingDirectory` and `User` before enabling.
