@@ -3,7 +3,10 @@ from pydantic import BaseModel
 import json
 import time
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+import os
 
+# Force use of SQLite-backed event store by default for durability.
+os.environ.setdefault('EVENT_DB', 'simulator/events.db')
 from event_store import read_events, append_event
 import uvicorn
 import logging
