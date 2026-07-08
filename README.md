@@ -53,7 +53,7 @@ Convenience scripts
 
 CI Badge
 --------
-![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/thmg010-ctrl/fems/actions/workflows/ci.yml/badge.svg)
 
 
 

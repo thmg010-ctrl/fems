@@ -27,5 +27,6 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Run unit tests
         run: pytest -q
-      - name: Run integration test
-        run: python3 tests/run_integration.py
+      - name: Run integration test (SQLite-backed)
+        run: |
+          EVENT_DB=simulator/events_ci.db python3 tests/run_integration.py
