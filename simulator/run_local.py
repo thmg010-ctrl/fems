@@ -13,7 +13,9 @@ import urllib.error
 
 CONTROLLER_URL = 'http://127.0.0.1:8000'
 WORKER_URL = 'http://127.0.0.1:8001'
-STORE = 'simulator/event_store.ndjson'
+# Prefer SQLite-backed store when EVENT_DB is set; otherwise fall back to NDJSON.
+import os
+STORE = os.getenv('EVENT_DB', 'simulator/event_store.ndjson')
 
 
 def wait_for(url, timeout=10.0):
@@ -41,8 +43,14 @@ def post_json(url, data):
 
 
 def main():
-    # clear event store
-    open(STORE, 'w').close()
+    # ensure simulator dir and SQLite DB exist when using DB
+    os.makedirs('simulator', exist_ok=True)
+    if STORE.endswith('.db'):
+        # ensure DB file exists
+        open(STORE, 'a').close()
+    else:
+        # clear event store (ndjson)
+        open(STORE, 'w').close()
 
     ctrl = subprocess.Popen([sys.executable, 'simulator/controller_app.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     worker = subprocess.Popen([sys.executable, 'simulator/worker_app.py'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)

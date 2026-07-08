@@ -7,10 +7,10 @@ install:
 	$(PIP) install -r requirements.txt --user
 
 run-local:
-	$(PY) simulator/run_local.py
+	EVENT_DB=simulator/events.db $(PY) simulator/run_local.py
 
 test:
-	$(PY) tests/run_integration.py
+	EVENT_DB=simulator/events.db $(PY) tests/run_integration.py
 
 run-sim:
 	$(PY) simulator/agent_simulator.py --agents 200 --steps 200 --out sim_output.json
