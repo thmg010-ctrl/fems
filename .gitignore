@@ -1,0 +1,19 @@
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# OS files
+.DS_Store
+
+# Logs and runtime
+simulator/event_store.ndjson
+.pytest_cache/
+
+# Environment files
+.env
